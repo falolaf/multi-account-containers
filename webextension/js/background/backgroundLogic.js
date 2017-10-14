@@ -80,7 +80,7 @@ const backgroundLogic = {
     // We can't open these we just have to throw them away
     if (protocol === "about:"
         || protocol === "chrome:"
-        || protocol === "moz-extension:") {
+        /*|| protocol === "moz-extension:"*/) {
       return false;
     }
     return true;
