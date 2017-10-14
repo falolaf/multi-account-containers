@@ -112,7 +112,9 @@ const messageHandler = {
       // lets remember the last tab created so we can close it if it looks like a redirect
       this.lastCreatedTab = tab;
       if (tab.cookieStoreId) {
-        this.unhideContainer(tab.cookieStoreId);
+        /* The following line shows all tabs in given container when
+           a new tab for given container is created. */
+        //this.unhideContainer(tab.cookieStoreId);
       }
       setTimeout(() => {
         this.lastCreatedTab = null;
