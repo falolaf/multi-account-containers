@@ -120,7 +120,10 @@ const messageHandler = {
           this.incrementCountOfContainerTabsOpened();
         }
 
-        this.unhideContainer(tab.cookieStoreId);
+	/* Disables showing all tabs in a hidden container if a new tab in this container
+	   is opened. Also prevents duplicate tabs to open if a hidden container is
+	   moved to new window. */
+        //this.unhideContainer(tab.cookieStoreId);
       }
       setTimeout(() => {
         this.lastCreatedTab = null;
