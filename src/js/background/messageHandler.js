@@ -120,20 +120,12 @@ const messageHandler = {
           this.incrementCountOfContainerTabsOpened();
         }
 	// See if all hidden tabs should be opened or not.
-        this.getShowAllTabsFromStorage(tab.cookieStoreId);
+        this.guardUnhideContainer(tab.cookieStoreId);
       }
       setTimeout(() => {
         this.lastCreatedTab = null;
       }, this.LAST_CREATED_TAB_TIMER);
     });
-  },
-
-  async getShowAllTabsFromStorage(cookieStoreId) {
-    // Use true as default value if not set in the storage yet. Will show all hidden tabs.
-    const showAllTabs = await browser.storage.local.get({"showAllTabs": true});
-    if (showAllTabs.showAllTabs) {
-      this.unhideContainer(cookieStoreId);
-    }
   },
 
   async incrementCountOfContainerTabsOpened() {
@@ -151,6 +143,14 @@ const messageHandler = {
       browser.storage.local.set({achievements});
       browser.browserAction.setBadgeBackgroundColor({color: "rgba(0,217,0,255)"});
       browser.browserAction.setBadgeText({text: "NEW"});
+    }
+  },
+
+  async guardUnhideContainer(cookieStoreId) {
+    // Use true if not set in the storage yet. Will show all hidden tabs as default.
+    const showAllTabs = await browser.storage.local.get({"showAllTabs": true});
+    if (showAllTabs.showAllTabs) {
+      this.unhideContainer(cookieStoreId);
     }
   },
 
