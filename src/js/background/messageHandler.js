@@ -119,16 +119,21 @@ const messageHandler = {
           // increment the counter of container tabs opened
           this.incrementCountOfContainerTabsOpened();
         }
-
-	/* Disables showing all tabs in a hidden container if a new tab in this container
-	   is opened. Also prevents duplicate tabs to open if a hidden container is
-	   moved to new window. */
-        //this.unhideContainer(tab.cookieStoreId);
+	// See if all hidden tabs should be opened or not.
+        this.getShowAllTabsFromStorage(tab.cookieStoreId);
       }
       setTimeout(() => {
         this.lastCreatedTab = null;
       }, this.LAST_CREATED_TAB_TIMER);
     });
+  },
+
+  async getShowAllTabsFromStorage(cookieStoreId) {
+    // Use true as default value if not set in the storage yet. Will show all hidden tabs.
+    const showAllTabs = await browser.storage.local.get({"showAllTabs": true});
+    if (showAllTabs.showAllTabs) {
+      this.unhideContainer(cookieStoreId);
+    }
   },
 
   async incrementCountOfContainerTabsOpened() {
