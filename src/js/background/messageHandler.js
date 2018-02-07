@@ -147,8 +147,9 @@ const messageHandler = {
   },
 
   async guardUnhideContainer(cookieStoreId) {
+    const key = "showAllTabs";
     // Use true if not set in the storage yet. Will show all hidden tabs as default.
-    const showAllTabs = await browser.storage.local.get({"showAllTabs": true});
+    const showAllTabs = await browser.storage.local.get({[key]: true});
     if (showAllTabs.showAllTabs) {
       this.unhideContainer(cookieStoreId);
     }

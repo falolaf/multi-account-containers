@@ -8,14 +8,14 @@ function saveOptions(e) {
 function restoreOptions() {
 
   function setShowAllTabs(result) {
-    document.querySelector("#showAllTabs").checked = result.showAllTabs || true;
+    document.querySelector("#showAllTabs").checked = result.showAllTabs;
   }
 
   function onError(error) {
     console.log(`Error: ${error}`);
   }
-
-  var showAllTabs = browser.storage.local.get("showAllTabs");
+  var key = "showAllTabs";
+  var showAllTabs = browser.storage.local.get({[key]: true});
   showAllTabs.then(setShowAllTabs, onError);
 }
 
