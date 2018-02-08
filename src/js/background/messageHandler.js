@@ -120,7 +120,7 @@ const messageHandler = {
           this.incrementCountOfContainerTabsOpened();
         }
 	// See if all hidden tabs should be opened or not.
-        this.guardUnhideContainer(tab.cookieStoreId);
+        this.optionallyUnhideContainer(tab.cookieStoreId);
       }
       setTimeout(() => {
         this.lastCreatedTab = null;
@@ -146,7 +146,7 @@ const messageHandler = {
     }
   },
 
-  async guardUnhideContainer(cookieStoreId) {
+  async optionallyUnhideContainer(cookieStoreId) {
     const key = "showAllTabs";
     // Use true if not set in the storage yet. Will show all hidden tabs as default.
     const showAllTabs = await browser.storage.local.get({[key]: true});
