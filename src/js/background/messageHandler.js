@@ -119,7 +119,7 @@ const messageHandler = {
           // increment the counter of container tabs opened
           this.incrementCountOfContainerTabsOpened();
         }
-	// See if all hidden tabs should be opened or not.
+        // Optionally open hidden tabs.
         this.optionallyUnhideContainer(tab.cookieStoreId);
       }
       setTimeout(() => {
