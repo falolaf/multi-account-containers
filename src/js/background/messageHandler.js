@@ -155,7 +155,9 @@ const messageHandler = {
           this.incrementCountOfContainerTabsOpened();
         }
 
-        backgroundLogic.unhideContainer(tab.cookieStoreId);
+        // Optionally open hidden tabs.
+        this.optionallyUnhideContainer(tab.cookieStoreId);
+
       }
       setTimeout(() => {
         this.lastCreatedTab = null;
@@ -178,6 +180,15 @@ const messageHandler = {
       browser.storage.local.set({achievements});
       browser.browserAction.setBadgeBackgroundColor({color: "rgba(0,217,0,255)"});
       browser.browserAction.setBadgeText({text: "NEW"});
+    }
+  },
+
+  async optionallyUnhideContainer(cookieStoreId) {
+    const key = "showAllTabs";
+    // Use true if not set in the storage yet. Will show all hidden tabs as default.
+    const showAllTabs = await browser.storage.local.get({[key]: true});
+    if (showAllTabs.showAllTabs) {
+      backgroundLogic.unhideContainer(cookieStoreId);
     }
   },
 
